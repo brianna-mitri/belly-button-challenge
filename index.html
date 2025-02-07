@@ -13,12 +13,47 @@
 <body>
     <!-- Dashboard layout -->
     <div class="container">
-        <!-- Header row -->
+        <!-- Row 1: Header row -->
         <div class="row">
             <h1>Belly Button Biodiversity Dashboard</h1>
             <p>Use the interactive charts below to explore the dataset</p>
         </div>
+        
+        <!-- Row 2: Subject ID dropdown, Demographic Info, bar Chart -->
+        <div class="row">
+
+            <!-- First Col -->
+            <div class="col-md-3">
+
+                <!-- Selection Card -->
+                <div class="card card-body bg-light">
+                    <h6>Test Subject ID Number:</h6>
+                    <select id="nameDropdown">
+                        <!-- Populate Options with JS -->
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+
+                <!-- Demographic Info Card -->
+                <div class="card card-primary">
+                    <div class="card-header" id="demoInfoCard">
+                        <h4 class="card-title">Demographic Info</h4>
+                        <!-- Fill with JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Col -->
+            <div class="col-md-9">
+                <!-- Bar Chart: Top 10-->
+                <div id="topTenBarChart">
+                    <!-- Fill with JS -->
+                </div>
+             </div>
+    
+        </div>
     </div>
+
 
     <!-- Load JavaScript -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
