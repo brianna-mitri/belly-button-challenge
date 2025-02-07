@@ -8,9 +8,9 @@ const dataURL = 'https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.j
 const nameDropdown = document.getElementById('nameDropdown');
 
 // for visualizations
+const demoInfoCard = document.getElementById('demoInfoCard');
 const topTenBarChart  = document.getElementById('topTenBarChart');
 const bubbleChart = document.getElementById('bubbleChart');
-
 
 /***************************************
  * Function: populate dropdown
@@ -37,6 +37,14 @@ function populateDropdown(selectElement, item, placeholder) {
 /***************************************
  * Functions: Build Charts
  **************************************/
+// demographic info card
+function buildInfoCard(data) {
+    // convert metadata into html friendly format
+    demoInfoCard.innerHTML = Object.entries(data)
+        .map(([key, value]) => `<p><strong>${key.replace(/_/g, " ").toUpperCase()}:</strong> ${value}</p>`)
+        .join('');
+}
+
 // bar chart of top 10 OTU's
 function buildBarChart(data) {
     // combine OTU data with sample values and labels
@@ -119,9 +127,10 @@ function buildBubbleChart (data) {
 function refreshDashboard(selectedId, data) {
     // filter data by id
     let sampleData = data.samples.find((sample) => sample.id === selectedId);
-    //let metaData = data.metadata.find((metadata) = metadata.id === selectedId);
+    let metaData = data.metadata.find((metadata) => metadata.id == selectedId);
 
     // build visualizations
+    buildInfoCard(metaData);
     buildBarChart(sampleData);
     buildBubbleChart(sampleData);
 }
