@@ -9,7 +9,7 @@ const nameDropdown = document.getElementById('nameDropdown');
 
 // for visualizations
 const topTenBarChart  = document.getElementById('topTenBarChart');
-
+const bubbleChart = document.getElementById('bubbleChart');
 
 
 /***************************************
@@ -37,7 +37,7 @@ function populateDropdown(selectElement, item, placeholder) {
 /***************************************
  * Functions: Build Charts
  **************************************/
-// function: bar chart of top 10 OTU's
+// bar chart of top 10 OTU's
 function buildBarChart(data) {
     // combine OTU data with sample values and labels
     let combinedData = data.otu_ids.map((id, index) => ({
@@ -79,8 +79,37 @@ function buildBarChart(data) {
 
     // plot chart
     Plotly.newPlot(topTenBarChart, trace, layout, {responsive: true});
-    
-    console.log(top10);
+}
+
+// bubble chart of bacteria cultures per sample
+function buildBubbleChart (data) {
+    // set up trace
+    trace = [{
+        x: data.otu_ids,
+        y: data.sample_values,
+        mode: 'markers',
+        marker: {
+            size: data.sample_values,
+            color: data.otu_ids,
+            colorscale: 'Earth'
+        },
+        text: data.otu_labels,
+        hoverinfo: 'skip',
+        hovertemplate: 
+            "<b>OTU Label: </b> %{text}<br>" +
+            "<b>Sample Value:</b> %{x}<extra></extra>"+
+            "<b>OTU ID:</b> %{y}<extra></extra>"
+    }];
+
+    // set up layout
+    let layout = {
+        title: 'Bacteria Cultures Per Sample',
+        xaxis: {title: 'OTU ID'},
+        yaxis: {title: 'Number of Bacteria'},
+        hovermode: 'closest'
+    };
+    // plot chart
+    Plotly.newPlot(bubbleChart, trace, layout, {responsive: true});
 }
 
 /***************************************
@@ -94,6 +123,7 @@ function refreshDashboard(selectedId, data) {
 
     // build visualizations
     buildBarChart(sampleData);
+    buildBubbleChart(sampleData);
 }
 
 // on page load: fetch data & initialize dashboard
